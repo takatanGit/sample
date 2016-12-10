@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+    //初回アプリ起動時にDBを生成
+　　function onDeviceReady() {
+        var db = window.openDatabase("TestDB", "1.0", "testdb", 1000000);
+　　　　//createQuery関数を呼び出す（CREATE TABLEを行う)
+        db.transaction(createQuery, errorCB, successCB);
+    }    
+    //CREATE TABLEを行う
+    function createQuery(tx) {
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Testtbl (id , data)');//存在しなければテーブル作成
+    }
+    //トランザクション失敗時のコールバック
+    function errorCB(err) {
+        window.alert("SQL 実行中にエラーが発生しました: "+err.code);
+    }
+    //トランザクション成功時のコールバック
+    function successCB() {
+    }
+
+
+　　　//書込みボタンを押したときの関数
+    function insetData(){
+        var db = window.openDatabase("TestDB", "1.0", "testdb", 1000000);
+        db.transaction(insertSQL, errorCB, successInsert);//insertSQL関数を呼び出す
+    }
+    
+    //INSERT文を実行
+     function insertSQL(tx) {
+        tx.executeSql('INSERT INTO Testtbl (id, data) VALUES (7, "' + document.getElementById("txtInput").value + '")');
+    }
+    
+    function successInsert(){
+        window.alert("書込みが完了しました");
+        var txt = document.getElementById("txtInput");
+        txt.value = "";
+    }
+
+    
+    
+    </script>
+</head>
+<body>
+    <h1 id="nick">一言日記</h1>
+    <input type="text" id="txtInput">
+    <input type="button" value="書込み" onclick="insetData()"><br>
+    <a href="listpage.html">リスト表示</a><br />
+    <div class="ImageSrc">
+        <img src="img/monaca2.jpg" alt=""width="50%" height="130"  />
+    </div>
+    <div class="ImageSrc2">
+        <img src="img/monaca.jpg" alt=""width="50%" height="130"  />
+    </div>
+</body>
+</html>

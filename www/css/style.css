@@ -1,0 +1,22 @@
+@charset "utf-8";
+body{
+    font-family: メイリオ,'Hiragino Kaku Gothic Pro', sans-serif;
+    background-image: url("../img/back.png");
+}
+#listdiv div {
+background-color: #6699ff; padding: 7px;
+width: 90%; margin-right: auto; margin-left: auto; margin-top: 5px;
+￼}
+#nick{
+    color: red;
+}
+.ImageSrc img{
+    float: right;
+}
+.ImageSrc2 img{
+    float: left;
+}
+a { color: red; }
+.list1{
+    border: solid red;
+}
